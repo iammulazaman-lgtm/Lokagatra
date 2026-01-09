@@ -20,19 +20,16 @@ def login_gerbang():
     st.sidebar.markdown("---")
     st.sidebar.markdown("*“Hanya nalar yang jernih yang mampu menyentuh akar waktu.”*")
     
-    # Identitas & Kunci sesuai nilai Sansekerta Hilmi Mulazaman
     user_input = st.sidebar.text_input("Identitas Sansekerta (Username)")
     pw_input = st.sidebar.text_input("Kunci Adikala (Password)", type="password")
     
     if st.sidebar.button("Buka Gerbang Peradaban"):
-        # Username: PRASANTI_ADIKALA | Password: prasanti_adikala24
         if user_input == "PRASANTI_ADIKALA" and pw_input == "prasanti_adikala24":
             st.session_state['logged_in'] = True
             st.rerun()
         else:
             st.sidebar.error("Kunci tidak berjodoh dengan pintu. Selaraskan kembali nalar Anda.")
 
-# Cek Status Login
 if not st.session_state['logged_in']:
     st.title("🏛️ LOKAGATRA: LOGIC WORLD")
     st.markdown("### *Peta Peradaban Digital: Menata Masa Depan dari Akar Waktu*")
@@ -62,77 +59,104 @@ with st.sidebar:
 # 4. IMPLEMENTASI RUANG-RUANG
 # ==========================================
 
-# --- RUANG 1: BAITUL HIKMAH ---
+# --- TAHAP 1: IMPLEMENTASI BAITUL HIKMAH (DETAILED) ---
 if ruang == "📚 Ruang Baitul Hikmah":
     st.header("📚 Baitul Hikmah (Perpustakaan Abadi)")
-    st.markdown("> *Tempat buku-buku yang 'dibakar' bangkit kembali dalam bentuk digital.*")
+    st.markdown("> *Menyatukan Akar Klasik dan Nalar Modern untuk Kesembuhan Jiwa.*")
     
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        with st.expander("📖 Manuskrip Utama (Pustaka Klasik)"):
-            st.write("1. **Al-Qanun fit-Tibb** (Ibnu Sina) – Kedokteran")
-            st.write("2. **Muqaddimah** (Ibnu Khaldun) – Sosiologi & Sejarah")
-            st.write("3. **Al-Jabr** (Al-Khwarizmi) – Matematika & Koding")
-            st.write("4. **Ar-Risalah** (Imam Syafi'i) – Logika Hukum")
-            st.button("🔄 Aktifkan Fitur 'Indonesiakan' (Translasi AI)")
-    
-    with col2:
-        st.subheader("🔓 Akses Kitab")
-        st.caption("Biografi & Ringkasan: Gratis")
-        st.info("Download PDF & Analisa: Akses Berbayar (QRIS/Midtrans)")
-        st.button("Beli Akses Penuh")
+    tab_pustaka, tab_premium = st.tabs(["🍃 Jalur Barokah (Gratis)", "💎 Jalur Kedaulatan (Berbayar)"])
+
+    with tab_pustaka:
+        st.subheader("Pustaka Umum (Mahar Data Diri)")
+        st.write("Silakan pilih kitab untuk dipelajari. Akses dibuka setelah menyetor data diri.")
+        
+        # Daftar Buku Gratis yang Sudah Dikunci
+        buku_gratis = {
+            "Man's Search For Meaning - Viktor Frankl": "LINK_GD_FRANKL",
+            "Siddharta - Hermann Hesse": "LINK_GD_HESSE",
+            "Hujan Bulan Juni - Sapardi Djoko Damono": "LINK_GD_SAPARDI",
+            "The Things You Can See Only When You Slow Down - Haemin Sunim": "LINK_GD_HAEMIN",
+            "Al-Munqidh min al-Dalal - Al-Ghazali": "LINK_GD_GHAZALI"
+        }
+        
+        pilihan_gratis = st.selectbox("Pilih Kitab Gratis:", list(buku_gratis.keys()))
+        
+        with st.form("form_santri"):
+            st.write("### 📝 Form Mahar Data")
+            nama = st.text_input("Nama Lengkap")
+            wa = st.text_input("Nomor WhatsApp (Aktif)")
+            
+            if st.form_submit_button("Buka Kunci Naskah"):
+                if nama and wa:
+                    st.success(f"Rahayu, {nama}. Data Anda telah tersimpan di lumbung. Silakan unduh melalui tombol di bawah.")
+                    st.link_button(f"📥 Unduh {pilihan_gratis}", "https://google.com") # Ganti dengan link Drive asli nanti
+                else:
+                    st.warning("Mohon isi data diri untuk menghargai nalar penulis.")
+
+    with tab_premium:
+        st.subheader("Manuskrip Langka & Bundle Solusi")
+        st.info("Naskah ini didapatkan melalui jalur perburuan khusus. Mahar digunakan untuk kedaulatan operasional.")
+        
+        col_a, col_b = st.columns(2)
+        
+        with col_a:
+            st.markdown("**📁 Nalar Strategi & Masa Depan**")
+            st.write("- 21 Lessons for 21st Century (Harari)")
+            st.write("- The Book of Five Rings (Musashi)")
+            st.write("- Kitab Tadbir an-Nafs (Ibnu Sina)")
+            st.link_button("🔓 Tebus Mahar Naskah", "https://lynk.id/ruangarti")
+
+        with col_b:
+            st.markdown("**📁 Bundle Navigasi Jiwa (Poppy's Dream)**")
+            st.write("- The Book of Twenties (Anxiety Solution)")
+            st.write("- The Book of Dreams (Identity Mapping)")
+            st.write("- The Book of Executor (Action Plan)")
+            st.link_button("🛍️ Beli Bundle (Rp249rb - Rp349rb)", "https://lynk.id/ruangarti")
 
 # --- RUANG 2: BALAI KERJA ---
 elif ruang == "🛠️ Ruang Balai Kerja":
     st.header("🛠️ Balai Kerja (Freelance & Creative Hub)")
-    tab1, tab2, tab3 = st.tabs(["🖋️ Copywriter & Penulis", "🔍 Peneliti & Akademisi", "📊 Data Analyst"])
+    tab1, tab2, tab3 = st.tabs(["🖋️ Editor & Copywriter", "🔍 Peneliti & Akademisi", "📊 Data Analyst"])
     
     with tab1:
-        st.write("Mode Gelap & Musik Lo-Fi Aktif.")
-        st.text_area("Meja Tulis:", placeholder="Tuangkan gagasan Anda di sini...")
-        st.button("Hitung Efisiensi Kata")
+        st.write("Alat penyunting naskah dan mesin AIDA.")
+        st.text_area("Meja Tulis Editor:", placeholder="Masukkan draf buku Anda...")
+        st.button("Cek Kerapihan Bahasa (Readability Index)")
         
     with tab2:
         st.write("Validasi Sastrawi & Cek Plagiasi.")
-        st.file_uploader("Unggah naskah (Dokumen/PDF)")
+        st.file_uploader("Unggah naskah untuk cek Turnitin")
         
     with tab3:
-        st.write("Kalkulator Cerdas & Pemrosesan Data Mentah.")
+        st.write("Kalkulator Cerdas Peradaban.")
         st.number_input("Input Data Numerik:")
 
 # --- RUANG 3: MAJELIS ILMU ---
 elif ruang == "🤝 Ruang Majelis Ilmu":
     st.header("🤝 Majelis Ilmu (Meeting & Interaksi)")
-    st.warning("Aturan Main: Gratis maks. 3 orang (40 menit). Premium via Webhook Midtrans.")
-    
-    if st.button("Hubungkan ke Jitsi Meet (Video Conference)"):
-        st.info("Mengintegrasikan Pintu Meeting...")
-        st.markdown("[Klik di Sini untuk Masuk Ruang Rapat]")
+    st.warning("Pintu interaksi langsung antar Khalifah.")
+    if st.button("Hubungkan ke Jitsi Meet"):
+        st.markdown("[Masuk Ruang Rapat]")
 
 # --- RUANG 4: RUANG SASTRA & BUDAYA ---
 elif ruang == "🎭 Ruang Sastra & Budaya":
     st.header("🎭 Sastra & Hiburan (Ruang Budaya)")
-    st.write("Menghaluskan budi pekerti melalui karya anak bangsa.")
-    
-    with st.container():
-        st.subheader("Koleksi Pilihan")
-        c1, c2 = st.columns(2)
-        with c1:
-            st.write("**📖 Cerpen & Puisi**")
-            st.caption("Baca Bab 1-3 Gratis")
-            st.button("Buka Lanjutannya (Sedekah Digital/Saweria)")
-        with c2:
-            st.write("**🎨 Komik Anak Bangsa**")
-            st.caption("Sistem Bagi Hasil 70/30")
+    st.write("Pencarian Jati Diri melalui Rasa.")
+    st.write("- Titik Nol (Agustinus Wibowo)")
+    st.button("Buka Koleksi Sastra")
 
 # --- RUANG 5: ALAT BEDAH ---
 elif ruang == "🧮 Ruang Alat Bedah & Kalkulator":
-    st.header("🧮 Alat Bedah & Kalkulator Utility")
-    tool = st.selectbox("Pilih Alat Bantu:", ["Kalkulator Zakat & Waris", "Cek Plagiasi (Gratis 1x/hari)", "Analisa Narasi (Reading Ease)"])
+    st.header("🧮 Laboratorium Alat Bedah")
+    tool = st.selectbox("Pilih Alat Bantu:", ["Kalkulator Zakat & Waris", "Triangulasi Sumber Sejarah", "Analisa Aksara Arkeologi"])
     
     if tool == "Kalkulator Zakat & Waris":
         st.number_input("Masukkan Nominal Harta:", step=1000)
         st.button("Hitung Distribusi")
+    elif tool == "Triangulasi Sumber Sejarah":
+        st.text_area("Input Sumber Primer:")
+        st.text_area("Input Sumber Sekunder:")
+        st.button("Bedah Historiografi")
 
 # ==========================================
 # 5. PENUTUP & FILOSOFI (FOOTER)
@@ -145,5 +169,5 @@ st.markdown(
         <small><b>LOGIC WORLD</b> - Khalifah: Hilmi Mulazaman (Prasanti Adikala)</small>
     </div>
     """, 
-    unsafe_allow_html=True
+   unsafe_allow_html=True
 )

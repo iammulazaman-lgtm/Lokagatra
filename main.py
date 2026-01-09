@@ -9,24 +9,28 @@ st.set_page_config(
     page_icon="🏛️"
 )
 
-# CSS Custom untuk mempercantik tampilan agar lebih berwibawa
+# Custom Styling untuk Kewibawaan Visual
 st.markdown("""
     <style>
-    .main {
-        background-color: #f5f7f9;
+    .stApp { background-color: #fcfcfc; }
+    .kurasi-box {
+        padding: 15px;
+        border-left: 5px solid #1e3d59;
+        background-color: #f0f4f7;
+        margin-bottom: 10px;
+        border-radius: 0px 10px 10px 0px;
     }
-    .stButton>button {
-        width: 100%;
-        border-radius: 5px;
-        height: 3em;
-        background-color: #1e3d59;
-        color: white;
+    .jurnal-card {
+        padding: 15px;
+        border: 1px solid #d1d1d1;
+        border-radius: 10px;
+        background-color: #ffffff;
     }
     </style>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. SISTEM KEAMANAN GERBANG (AUTHENTICATION)
+# 2. SISTEM KEAMANAN GERBANG
 # ==========================================
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
@@ -34,39 +38,36 @@ if 'logged_in' not in st.session_state:
 def login_gerbang():
     st.sidebar.title("🏛️ Gerbang Prasanti")
     st.sidebar.markdown("---")
-    st.sidebar.markdown("*“Hanya nalar yang jernih yang mampu menyentuh akar waktu.”*")
-    
     user_input = st.sidebar.text_input("Identitas Sansekerta (Username)")
     pw_input = st.sidebar.text_input("Kunci Adikala (Password)", type="password")
     
     if st.sidebar.button("Buka Gerbang Peradaban"):
-        # Username: PRASANTI_ADIKALA | Password: prasanti_adikala24
         if user_input == "PRASANTI_ADIKALA" and pw_input == "prasanti_adikala24":
             st.session_state['logged_in'] = True
             st.rerun()
         else:
-            st.sidebar.error("Kunci tidak berjodoh. Selaraskan kembali nalar Anda.")
+            st.sidebar.error("Kunci tidak berjodoh dengan pintu.")
 
 if not st.session_state['logged_in']:
     st.title("🏛️ LOKAGATRA: LOGIC WORLD")
-    st.markdown("### *Peta Peradaban Digital: Menata Masa Depan dari Akar Waktu*")
-    st.info("Selamat datang di ambang pintu ilmu. Silakan masukkan identitas Anda pada gerbang di sebelah kiri.")
+    st.markdown("### *Menata Masa Depan dari Akar Waktu*")
+    st.info("Silakan masukkan identitas Anda pada gerbang di sebelah kiri.")
     login_gerbang()
     st.stop()
 
 # ==========================================
-# 3. NAVIGASI PETA PERADABAN (SIDEBAR)
+# 3. NAVIGASI PETA PERADABAN
 # ==========================================
 with st.sidebar:
     st.success("Rahayu, Sang Adikala.")
     st.markdown("---")
     ruang = st.radio("Pilih Ruang Peradaban:", [
-        "📚 Ruang Baitul Hikmah",
-        "🛠️ Ruang Balai Kerja",
-        "🧮 Ruang Alat Bedah & Kalkulator"
+        "📚 Baitul Hikmah (Rekomendasi Adikala)",
+        "📊 Ruang Riset & Jurnal Ilmiah",
+        "🛠️ Balai Kerja"
     ])
     st.markdown("---")
-    if st.button("Tutup Gerbang (Log Out)"):
+    if st.button("Log Out"):
         st.session_state['logged_in'] = False
         st.rerun()
 
@@ -74,80 +75,79 @@ with st.sidebar:
 # 4. IMPLEMENTASI RUANG-RUANG
 # ==========================================
 
-# --- RUANG 1: BAITUL HIKMAH (NAVIGATOR TERJEMAHAN) ---
-if ruang == "📚 Ruang Baitul Hikmah":
-    st.header("📚 Baitul Hikmah - Navigator Terjemahan Indonesia")
-    st.markdown("> *Menemukan kembali nalar yang hilang dalam bahasa yang kita pahami.*")
+# --- RUANG 1: BAITUL HIKMAH (KURASI REKOMENDASI) ---
+if ruang == "📚 Baitul Hikmah (Rekomendasi Adikala)":
+    st.header("📚 Baitul Hikmah - Kurasi Rekomendasi Sang Adikala")
+    st.markdown("> *Ilmu bukan untuk dihafal, tapi untuk membedah realitas.*")
     st.markdown("---")
 
-    # DAFTAR NASKAH (OTOMATIS MENCARI VERSI INDONESIA)
-    st.subheader("🍃 Jalur Pustaka Terjemahan (Warisan Publik)")
-    st.write("Sistem akan melacak versi Bahasa Indonesia dari naskah-naskah maestro dunia:")
-
-    naskah_data = {
-        "Al-Munqidh min al-Dalal": ["Imam Al-Ghazali", "Terjemahan+Indonesia+Al-Munqidh+min+al-Dalal+PDF"],
-        "Tadbir an-Nafs": ["Ibnu Sina (Avicenna)", "Terjemahan+Indonesia+Tadbir+an-Nafs+Ibnu+Sina+PDF"],
-        "Muqaddimah": ["Ibnu Khaldun", "Terjemahan+Muqaddimah+Ibnu+Khaldun+PDF+Indonesia"],
-        "Siddharta": ["Hermann Hesse", "Siddharta+Hermann+Hesse+Bahasa+Indonesia+PDF"],
-        "Man's Search for Meaning": ["Viktor E. Frankl", "Man%27s+Search+for+Meaning+Bahasa+Indonesia+PDF"],
-        "The Book of Five Rings": ["Miyamoto Musashi", "The+Book+of+Five+Rings+Bahasa+Indonesia+PDF"],
-        "The Things You Can See...": ["Haemin Sunim", "Haemin+Sunim+The+Things+You+Can+See+Only+When+You+Slow+Down+Bahasa+Indonesia+PDF"]
-    }
-
-    for judul, info in naskah_data.items():
-        with st.container():
-            col_buku, col_tombol = st.columns([3, 1])
-            with col_buku:
-                st.markdown(f"📖 **{judul}**")
-                st.caption(f"Karya: {info[0]}")
-            with col_tombol:
-                st.link_button("🇮🇩 Cari Terjemahan", f"https://www.google.com/search?q={info[1]}")
-            st.markdown("---")
-
-    # NAVIGATOR SHOPPING (BELANJA RESMI)
-    st.subheader("🛒 Jalur Kedaulatan (Navigator Belanja Resmi)")
-    st.write("Mencari gerai resmi untuk buku fisik asli (Harari, Musashi, Sapardi, Agustinus Wibowo, dll).")
+    # KATEGORI GOLDEN AGE
+    st.subheader("🌙 Naskah Klasik Zaman Keemasan")
     
-    cari_belanja = st.text_input("Ketik Judul Buku untuk Cek Harga di Gramedia/Marketplace:")
-    if cari_belanja:
-        st.link_button(f"🔎 Cari Harga Terbaik '{cari_belanja}'", f"https://www.google.com/search?tbm=shop&q=buku+original+{cari_belanja}")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("<div class='kurasi-box'><b>📖 Al-Qanun fit-Thibb (Ibnu Sina)</b><br><small><i>Catatan Nalar:</i> Fokus pada bagaimana Ibnu Sina melakukan triangulasi antara logika dan observasi klinis.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Naskah Otentik", "https://archive.org/details/al-qanun-fit-tibb-lengkap")
 
-# --- RUANG 2: BALAI KERJA ---
-elif ruang == "🛠️ Ruang Balai Kerja":
-    st.header("🛠️ Balai Kerja (Creative & Freelance Hub)")
-    st.write("Fokus pada nalar eksekusi dan karya.")
-    
-    tab_editor, tab_analisa = st.tabs(["🖋️ Meja Editor", "📊 Analisa Kerja"])
-    with tab_editor:
-        st.text_area("Meja Tulis:", placeholder="Tuangkan gagasan nalar Anda di sini...", height=300)
-        st.button("Hitung Ritme Kata")
-    with tab_analisa:
-        st.file_uploader("Unggah draf untuk pengecekan pola nalar.")
+        st.markdown("<br>", unsafe_allow_html=True)
 
-# --- RUANG 3: ALAT BEDAH ---
-elif ruang == "🧮 Ruang Alat Bedah & Kalkulator":
-    st.header("🧮 Laboratorium Alat Bedah")
-    st.write("Gunakan alat ini untuk membedah data dan sejarah secara presisi.")
+        st.markdown("<div class='kurasi-box'><b>📖 Tahafut al-Falasifah (Al-Ghazali)</b><br><small><i>Catatan Nalar:</i> Bedah nalar kritik filosofis untuk menjaga kejernihan akidah dan logika.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Naskah Otentik", "https://archive.org/details/TahafutAlFalasifahAlGhazaliTerjemah")
+
+    with col2:
+        st.markdown("<div class='kurasi-box'><b>📖 Kitab Al-Jabr (Al-Khwarizmi)</b><br><small><i>Catatan Nalar:</i> Dasar dari segala algoritma digital hari ini. Nalar matematika Islam.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Naskah Otentik", "https://archive.org/details/TheAlgebraOfMohammedBenMusa")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.markdown("<div class='kurasi-box'><b>📖 Muqaddimah (Ibnu Khaldun)</b><br><small><i>Catatan Nalar:</i> Memahami siklus peradaban dan sosiologi kekuasaan secara objektif.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Naskah Otentik", "https://archive.org/download/BukuMuqaddimahIbnuKhaldun/Buku%20Muqaddimah%20Ibnu%20Khaldun.pdf")
+
+    st.divider()
+
+    # KATEGORI MODERN & PSIKOLOGI
+    st.subheader("🌍 Nalar Modern & Fakta Teruji")
+    c1, c2 = st.columns(2)
     
-    opsi_alat = st.selectbox("Pilih Alat:", ["Triangulasi Sumber Sejarah", "Analisa Aksara Arkeologi", "Kalkulator Zakat & Waris"])
+    with c1:
+        st.markdown("<div class='kurasi-box'><b>📖 Man's Search for Meaning (Viktor Frankl)</b><br><small><i>Catatan Nalar:</i> Fakta sejarah kamp konsentrasi yang melahirkan ilmu ketangguhan jiwa.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Terjemahan Indo", "https://archive.org/download/mans-search-for-meaning-pdf-bahasa-indonesia/Viktor%20Frankl%20-%20Man%27s%20Search%20For%20Meaning.pdf")
+
+    with c2:
+        st.markdown("<div class='kurasi-box'><b>📖 Orientalism (Edward Said)</b><br><small><i>Catatan Nalar:</i> Kritik sejarah yang diakui dunia. Membedah cara Barat melihat Timur.</small></div>", unsafe_allow_html=True)
+        st.link_button("📄 Buka Naskah", "https://archive.org/details/Orientalism_201710")
+
+# --- RUANG 2: RUANG RISET (JURNAL ILMIAH) ---
+elif ruang == "📊 Ruang Riset & Jurnal Ilmiah":
+    st.header("📊 Navigator Riset & Fakta Dunia")
+    st.write("Akses langsung ke hasil penelitian yang diakui dunia dan teruji fakta sejarahnya.")
     
-    if opsi_alat == "Triangulasi Sumber Sejarah":
-        st.subheader("Metode Triangulasi")
-        st.text_area("Sumber A (Kolonial/Asing):")
-        st.text_area("Sumber B (Lokal/Tradisi):")
-        st.text_area("Sumber C (Data Arkeologi):")
-        st.button("Bedah Korelasi")
+    tab_search, tab_repo = st.tabs(["🔍 Pencarian Jurnal", "🏛️ Repository Pilihan"])
+    
+    with tab_search:
+        topik = st.text_input("Ketik Bidang Keilmuan (Misal: Arkeologi Islam, Neuroains, Sejarah Ekonomi):")
+        if topik:
+            st.link_button(f"🌐 Cari Jurnal Ilmiah di CORE", f"https://core.ac.uk/search?q={topik}")
+            st.link_button(f"🏛️ Cari Riset Terakreditasi di Google Scholar", f"https://scholar.google.com/scholar?q={topik}")
+
+    with tab_repo:
+        st.markdown("""
+        <div class='jurnal-card'>
+        <b>📌 Rekomendasi Sumber Riset:</b><br>
+        1. <b>JSTOR:</b> Arsip jurnal sejarah dan kemanusiaan dunia.<br>
+        2. <b>Nature Journal:</b> Fakta sains dan biologi teruji.<br>
+        3. <b>UNESCO Silk Road Project:</b> Data otentik pertukaran ilmu lintas peradaban.
+        </div>
+        """, unsafe_allow_html=True)
+
+# --- RUANG 3: BALAI KERJA ---
+elif ruang == "🛠️ Balai Kerja":
+    st.header("🛠️ Balai Kerja")
+    st.text_area("Meja Tulis Adikala:", placeholder="Tuangkan analisis keilmuan Anda di sini...", height=400)
 
 # ==========================================
-# 5. PENUTUP & FILOSOFI (FOOTER)
+# 5. FOOTER
 # ==========================================
 st.markdown("---")
-st.markdown(
-    """
-    <div style='text-align: center;'>
-        <p><i>"Nalar tidak boleh dipenjara. Ia harus menemukan jalannya sendiri dalam bahasa yang dimengerti oleh hati."</i></p>
-        <small><b>LOGIC WORLD</b> - Khalifah: Hilmi Mulazaman (Prasanti Adikala)</small>
-    </div>
-    """, 
-    unsafe_allow_html=True
-)
+st.markdown("<center><small>LOGIC WORLD - Kurasi & Rekomendasi: Hilmi Mulazaman (Prasanti Adikala)</small></center>", unsafe_allow_html=True)

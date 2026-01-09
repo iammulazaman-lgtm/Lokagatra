@@ -118,3 +118,9 @@ st.sidebar.markdown("---")
 if st.sidebar.button("Keluar (Logout)"):
     st.session_state.user = None
     st.rerun()
+
+if st.button("Buka Folder Buku"):
+    st.header("Arsip Digital Lokagatra")
+    st.write("Daftar Buku Terkini:")
+    st.info("1. Manuskrip Sejarah Nusantara")
+    st.info("2. Logika Nalar dan Rasa")

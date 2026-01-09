@@ -59,74 +59,83 @@ with st.sidebar:
 # 4. IMPLEMENTASI RUANG-RUANG
 # ==========================================
 
-# --- TAHAP 1: IMPLEMENTASI BAITUL HIKMAH (DETAILED) ---
+# --- RUANG 1: BAITUL HIKMAH (GLOBAL NAVIGATOR) ---
 if ruang == "📚 Ruang Baitul Hikmah":
-    st.header("📚 Baitul Hikmah (Perpustakaan Abadi)")
-    st.markdown("> *Menyatukan Akar Klasik dan Nalar Modern untuk Kesembuhan Jiwa.*")
+    st.header("📚 Baitul Hikmah - Global Navigator")
+    st.markdown("> *Menghubungkan nalar ke seluruh samudera ilmu di jagat digital.*")
     
-    tab_pustaka, tab_premium = st.tabs(["🍃 Jalur Barokah (Gratis)", "💎 Jalur Kedaulatan (Berbayar)"])
+    # FITUR PENCARIAN OTOMATIS GLOBAL
+    st.subheader("🔍 Navigator Pengetahuan")
+    query = st.text_input("Masukkan Judul Buku, Jurnal, atau Nama Ilmuwan:", placeholder="Contoh: Ibnu Sina, Harari, Musashi...")
+    
+    if query:
+        st.markdown(f"### Hasil Navigasi untuk: *{query}*")
+        col_search1, col_search2 = st.columns(2)
+        
+        with col_search1:
+            st.info("🍃 Jalur Pustaka & Naskah (Gratis/Publik)")
+            st.write("Mencari di Perpustakaan Digital, Archive.org, dan Repository Ilmiah.")
+            st.link_button(f"Cari PDF '{query}' di Dunia", f"https://www.google.com/search?q={query}+filetype:pdf+manuscript+archive")
+            
+        with col_search2:
+            st.warning("🛒 Jalur Gerai Resmi (Berbayar/Shopping)")
+            st.write("Mencari di Toko Buku Resmi, Gramedia, Mizan, dan Google Shopping.")
+            st.link_button(f"Cek Harga '{query}' di Shopping", f"https://www.google.com/search?tbm=shop&q={query}+buku+original")
+
+    st.divider()
+
+    tab_pustaka, tab_premium = st.tabs(["🍃 Koleksi Barokah (Locked)", "💎 Manuskrip & Bundle Khusus"])
 
     with tab_pustaka:
-        st.subheader("Pustaka Umum (Mahar Data Diri)")
-        st.write("Silakan pilih kitab untuk dipelajari. Akses dibuka setelah menyetor data diri.")
-        
-        # Daftar Buku Gratis yang Sudah Dikunci
+        st.subheader("Pustaka Terpilih (Mahar Data Diri)")
         buku_gratis = {
-            "Man's Search For Meaning - Viktor Frankl": "LINK_GD_FRANKL",
-            "Siddharta - Hermann Hesse": "LINK_GD_HESSE",
-            "Hujan Bulan Juni - Sapardi Djoko Damono": "LINK_GD_SAPARDI",
-            "The Things You Can See Only When You Slow Down - Haemin Sunim": "LINK_GD_HAEMIN",
-            "Al-Munqidh min al-Dalal - Al-Ghazali": "LINK_GD_GHAZALI"
+            "Man's Search For Meaning - Viktor Frankl": "https://archive.org/details/manssearchformeaning_202001",
+            "Siddharta - Hermann Hesse": "https://www.gutenberg.org/ebooks/500",
+            "The Things You Can See Only When You Slow Down - Haemin Sunim": "https://www.google.com/search?q=Haemin+Sunim+PDF+Public",
+            "Al-Munqidh min al-Dalal - Al-Ghazali": "https://archive.org/details/al-ghazali-deliverance-from-error",
+            "Muqaddimah - Ibnu Khaldun": "https://archive.org/details/MuqaddimahIbnuKhaldun"
         }
-        
         pilihan_gratis = st.selectbox("Pilih Kitab Gratis:", list(buku_gratis.keys()))
         
         with st.form("form_santri"):
             st.write("### 📝 Form Mahar Data")
             nama = st.text_input("Nama Lengkap")
             wa = st.text_input("Nomor WhatsApp (Aktif)")
-            
             if st.form_submit_button("Buka Kunci Naskah"):
                 if nama and wa:
-                    st.success(f"Rahayu, {nama}. Data Anda telah tersimpan di lumbung. Silakan unduh melalui tombol di bawah.")
-                    st.link_button(f"📥 Unduh {pilihan_gratis}", "https://google.com") # Ganti dengan link Drive asli nanti
+                    st.success(f"Rahayu, {nama}. Kunci telah dibuka.")
+                    st.link_button(f"📥 Unduh {pilihan_gratis}", buku_gratis[pilihan_gratis])
                 else:
                     st.warning("Mohon isi data diri untuk menghargai nalar penulis.")
 
     with tab_premium:
-        st.subheader("Manuskrip Langka & Bundle Solusi")
-        st.info("Naskah ini didapatkan melalui jalur perburuan khusus. Mahar digunakan untuk kedaulatan operasional.")
+        st.subheader("Manuskrip Langka & Produk Kedaulatan")
+        st.info("Naskah modern dengan hak cipta ketat dan produk spesialisasi.")
         
-        col_a, col_b = st.columns(2)
-        
-        with col_a:
-            st.markdown("**📁 Nalar Strategi & Masa Depan**")
-            st.write("- 21 Lessons for 21st Century (Harari)")
-            st.write("- The Book of Five Rings (Musashi)")
-            st.write("- Kitab Tadbir an-Nafs (Ibnu Sina)")
-            st.link_button("🔓 Tebus Mahar Naskah", "https://lynk.id/ruangarti")
+        c_a, c_b = st.columns(2)
+        with c_a:
+            st.markdown("**🏛️ Nalar Strategi & Masa Depan**")
+            st.caption("Akses langsung ke Shopping & Shopping Navigator")
+            st.write("- 21 Lessons (Harari)")
+            st.write("- Five Rings (Musashi)")
+            st.write("- Tadbir an-Nafs (Ibnu Sina)")
+            st.link_button("🛒 Cari Harga Terbaik di Gramedia", "https://www.gramedia.com/search?q=harari+musashi")
 
-        with col_b:
-            st.markdown("**📁 Bundle Navigasi Jiwa (Poppy's Dream)**")
-            st.write("- The Book of Twenties (Anxiety Solution)")
-            st.write("- The Book of Dreams (Identity Mapping)")
-            st.write("- The Book of Executor (Action Plan)")
-            st.link_button("🛍️ Beli Bundle (Rp249rb - Rp349rb)", "https://lynk.id/ruangarti")
+        with c_b:
+            st.markdown("**🌸 Bundle Navigasi Jiwa (Poppy's Dream)**")
+            st.caption("Produk Teruji & Jurnal Spesialis")
+            st.write("- The Book of Twenties, Dreams, & Executor")
+            st.link_button("🛍️ Tebus Mahar di Ruang Arti", "https://lynk.id/ruangarti")
 
 # --- RUANG 2: BALAI KERJA ---
 elif ruang == "🛠️ Ruang Balai Kerja":
     st.header("🛠️ Balai Kerja (Freelance & Creative Hub)")
     tab1, tab2, tab3 = st.tabs(["🖋️ Editor & Copywriter", "🔍 Peneliti & Akademisi", "📊 Data Analyst"])
-    
     with tab1:
-        st.write("Alat penyunting naskah dan mesin AIDA.")
         st.text_area("Meja Tulis Editor:", placeholder="Masukkan draf buku Anda...")
-        st.button("Cek Kerapihan Bahasa (Readability Index)")
-        
+        st.button("Cek Kerapihan Bahasa (AIDA Structure)")
     with tab2:
-        st.write("Validasi Sastrawi & Cek Plagiasi.")
-        st.file_uploader("Unggah naskah untuk cek Turnitin")
-        
+        st.file_uploader("Unggah naskah untuk cek Plagiasi/Turnitin")
     with tab3:
         st.write("Kalkulator Cerdas Peradaban.")
         st.number_input("Input Data Numerik:")
@@ -134,28 +143,26 @@ elif ruang == "🛠️ Ruang Balai Kerja":
 # --- RUANG 3: MAJELIS ILMU ---
 elif ruang == "🤝 Ruang Majelis Ilmu":
     st.header("🤝 Majelis Ilmu (Meeting & Interaksi)")
-    st.warning("Pintu interaksi langsung antar Khalifah.")
     if st.button("Hubungkan ke Jitsi Meet"):
         st.markdown("[Masuk Ruang Rapat]")
 
 # --- RUANG 4: RUANG SASTRA & BUDAYA ---
 elif ruang == "🎭 Ruang Sastra & Budaya":
     st.header("🎭 Sastra & Hiburan (Ruang Budaya)")
-    st.write("Pencarian Jati Diri melalui Rasa.")
+    st.write("Karya terpilih yang menyentuh akar rasa.")
     st.write("- Titik Nol (Agustinus Wibowo)")
-    st.button("Buka Koleksi Sastra")
+    st.write("- Hujan Bulan Juni (Sapardi Djoko Damono)")
+    st.link_button("🔍 Cari Karya Sastra Lainnya", "https://www.google.com/search?tbm=shop&q=buku+sastra+indonesia")
 
 # --- RUANG 5: ALAT BEDAH ---
 elif ruang == "🧮 Ruang Alat Bedah & Kalkulator":
     st.header("🧮 Laboratorium Alat Bedah")
     tool = st.selectbox("Pilih Alat Bantu:", ["Kalkulator Zakat & Waris", "Triangulasi Sumber Sejarah", "Analisa Aksara Arkeologi"])
-    
     if tool == "Kalkulator Zakat & Waris":
         st.number_input("Masukkan Nominal Harta:", step=1000)
         st.button("Hitung Distribusi")
     elif tool == "Triangulasi Sumber Sejarah":
         st.text_area("Input Sumber Primer:")
-        st.text_area("Input Sumber Sekunder:")
         st.button("Bedah Historiografi")
 
 # ==========================================
@@ -165,9 +172,9 @@ st.markdown("---")
 st.markdown(
     """
     <div style='text-align: center;'>
-        <p><i>"Apa yang dulu dihancurkan oleh musuh karena rasa takut, hari ini Mas bangun kembali karena rasa cinta pada ilmu."</i></p>
+        <p><i>"Apa yang dulu dihancurkan karena rasa takut, hari ini dibangun kembali karena cinta pada ilmu."</i></p>
         <small><b>LOGIC WORLD</b> - Khalifah: Hilmi Mulazaman (Prasanti Adikala)</small>
     </div>
     """, 
-   unsafe_allow_html=True
+    unsafe_allow_html=True
 )

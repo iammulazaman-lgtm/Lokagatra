@@ -1,106 +1,149 @@
 import streamlit as st
-import os
 
-# --- 1. KEAMANAN RAHASIA (Environment Variables) ---
-# Mengambil kunci gaib dari fitur Secrets Replit
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# ==========================================
+# 1. KONFIGURASI PONDASI (HEADER)
+# ==========================================
+st.set_page_config(
+    page_title="LOGIC WORLD - PRASANTI ADIKALA",
+    layout="wide",
+    page_icon="🏛️"
+)
 
-# --- 2. PENGATURAN GERBANG UTAMA ---
-st.set_page_config(page_title="LOGIC WORLD - Peta Peradaban Digital", layout="wide", page_icon="🌐")
-
-# --- 3. SISTEM KEAMANAN PINTU MASUK (Authentication) ---
+# ==========================================
+# 2. SISTEM KEAMANAN GERBANG (AUTHENTICATION)
+# ==========================================
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
-def login():
-    st.sidebar.title("🔑 Penjaga Gerbang")
-    user = st.sidebar.text_input("Username")
-    pw = st.sidebar.text_input("Password", type="password")
-    if st.sidebar.button("Masuk ke Logic World"):
-        if pw == SECRET_KEY: # Validasi kunci dari Secrets
+def login_gerbang():
+    st.sidebar.title("🏛️ Gerbang Prasanti")
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("*“Hanya nalar yang jernih yang mampu menyentuh akar waktu.”*")
+    
+    # Identitas & Kunci sesuai nilai Sansekerta Hilmi Mulazaman
+    user_input = st.sidebar.text_input("Identitas Sansekerta (Username)")
+    pw_input = st.sidebar.text_input("Kunci Adikala (Password)", type="password")
+    
+    if st.sidebar.button("Buka Gerbang Peradaban"):
+        # Username: PRASANTI_ADIKALA | Password: prasanti_adikala24
+        if user_input == "PRASANTI_ADIKALA" and pw_input == "prasanti_adikala24":
             st.session_state['logged_in'] = True
             st.rerun()
         else:
-            st.sidebar.error("Kunci Salah!")
+            st.sidebar.error("Kunci tidak berjodoh dengan pintu. Selaraskan kembali nalar Anda.")
 
+# Cek Status Login
 if not st.session_state['logged_in']:
-    st.title("🏛️ LOGIC WORLD")
-    st.info("Silakan masukkan kunci akses di Sidebar untuk masuk ke Peta Peradaban.")
-    login()
+    st.title("🏛️ LOKAGATRA: LOGIC WORLD")
+    st.markdown("### *Peta Peradaban Digital: Menata Masa Depan dari Akar Waktu*")
+    st.info("Selamat datang di ambang pintu ilmu. Silakan masukkan identitas Anda pada gerbang di sebelah kiri.")
+    login_gerbang()
     st.stop()
 
-# --- 4. NAVIGASI RUANG (PETA PERADABAN) ---
+# ==========================================
+# 3. NAVIGASI PETA PERADABAN (SIDEBAR)
+# ==========================================
 with st.sidebar:
-    st.title("🗺️ PETA PERADABAN")
-    ruang = st.radio("Pilih Ruang:", [
-        "1. Baitul Hikmah (Perpustakaan)",
-        "2. Balai Kerja (Creative Hub)",
-        "3. Majelis Ilmu (Meeting)",
-        "4. Sastra & Hiburan (Budaya)",
-        "5. Alat Bedah & Kalkulator"
+    st.success("Rahayu, Sang Adikala.")
+    st.markdown("---")
+    ruang = st.radio("Pilih Ruang Peradaban:", [
+        "📚 Ruang Baitul Hikmah",
+        "🛠️ Ruang Balai Kerja",
+        "🤝 Ruang Majelis Ilmu",
+        "🎭 Ruang Sastra & Budaya",
+        "🧮 Ruang Alat Bedah & Kalkulator"
     ])
-    if st.button("Keluar (Log Out)"):
+    st.markdown("---")
+    if st.button("Tutup Gerbang (Log Out)"):
         st.session_state['logged_in'] = False
         st.rerun()
 
-# --- 5. IMPLEMENTASI RUANG ---
+# ==========================================
+# 4. IMPLEMENTASI RUANG-RUANG
+# ==========================================
 
-# RUANG 1: BAITUL HIKMAH
-if ruang == "1. Baitul Hikmah (Perpustakaan)":
-    st.header("📚 Ruang Baitul Hikmah (Perpustakaan Abadi)")
-    st.write("Tempat buku-buku yang 'dibakar' bangkit kembali.")
+# --- RUANG 1: BAITUL HIKMAH ---
+if ruang == "📚 Ruang Baitul Hikmah":
+    st.header("📚 Baitul Hikmah (Perpustakaan Abadi)")
+    st.markdown("> *Tempat buku-buku yang 'dibakar' bangkit kembali dalam bentuk digital.*")
     
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([2, 1])
     with col1:
-        with st.expander("📖 Koleksi Manuskrip Klasik"):
-            st.write("- **Al-Qanun fit-Tibb** (Kedokteran)")
-            st.write("- **Muqaddimah** (Sosiologi & Sejarah)")
-            st.write("- **Al-Jabr** (Matematika & Koding)")
-            st.button("Terjemahkan (Indonesiakan) 🔄")
+        with st.expander("📖 Manuskrip Utama (Pustaka Klasik)"):
+            st.write("1. **Al-Qanun fit-Tibb** (Ibnu Sina) – Kedokteran")
+            st.write("2. **Muqaddimah** (Ibnu Khaldun) – Sosiologi & Sejarah")
+            st.write("3. **Al-Jabr** (Al-Khwarizmi) – Matematika & Koding")
+            st.write("4. **Ar-Risalah** (Imam Syafi'i) – Logika Hukum")
+            st.button("🔄 Aktifkan Fitur 'Indonesiakan' (Translasi AI)")
     
     with col2:
         st.subheader("🔓 Akses Kitab")
-        st.write("Status: *Premium Content*")
-        st.button("Buka PDF Lengkap (Scan QRIS/Midtrans)")
+        st.caption("Biografi & Ringkasan: Gratis")
+        st.info("Download PDF & Analisa: Akses Berbayar (QRIS/Midtrans)")
+        st.button("Beli Akses Penuh")
 
-# RUANG 2: BALAI KERJA
-elif ruang == "2. Balai Kerja (Creative Hub)":
-    st.header("🛠️ Ruang Balai Kerja")
-    sub_kerja = st.tabs(["Copywriter", "Peneliti", "Data Analyst"])
+# --- RUANG 2: BALAI KERJA ---
+elif ruang == "🛠️ Ruang Balai Kerja":
+    st.header("🛠️ Balai Kerja (Freelance & Creative Hub)")
+    tab1, tab2, tab3 = st.tabs(["🖋️ Copywriter & Penulis", "🔍 Peneliti & Akademisi", "📊 Data Analyst"])
     
-    with sub_kerja[0]:
-        st.write("Mode Gelap Aktif 🌙 | Musik Lo-Fi 🎧")
-        st.text_area("Tulis Narasi Anda di sini...")
+    with tab1:
+        st.write("Mode Gelap & Musik Lo-Fi Aktif.")
+        st.text_area("Meja Tulis:", placeholder="Tuangkan gagasan Anda di sini...")
         st.button("Hitung Efisiensi Kata")
         
-    with sub_kerja[1]:
-        st.write("Akses Jurnal & Validasi Sastrawi")
-        st.file_uploader("Upload Jurnal untuk Cek Plagiasi")
+    with tab2:
+        st.write("Validasi Sastrawi & Cek Plagiasi.")
+        st.file_uploader("Unggah naskah (Dokumen/PDF)")
+        
+    with tab3:
+        st.write("Kalkulator Cerdas & Pemrosesan Data Mentah.")
+        st.number_input("Input Data Numerik:")
 
-# RUANG 3: MAJELIS ILMU
-elif ruang == "3. Majelis Ilmu (Meeting)":
-    st.header("🤝 Majelis Ilmu (Virtual Meeting)")
-    st.warning("Syarat: Gratis max 3 orang (40 menit). Selebihnya otomatis via Webhook.")
-    if st.button("Mulai Pertemuan (Jitsi Integration)"):
-        st.info("Menghubungkan ke Jitsi Meet API...")
-        st.write("[Ruang Virtual Anda Siap - Klik di Sini]")
+# --- RUANG 3: MAJELIS ILMU ---
+elif ruang == "🤝 Ruang Majelis Ilmu":
+    st.header("🤝 Majelis Ilmu (Meeting & Interaksi)")
+    st.warning("Aturan Main: Gratis maks. 3 orang (40 menit). Premium via Webhook Midtrans.")
+    
+    if st.button("Hubungkan ke Jitsi Meet (Video Conference)"):
+        st.info("Mengintegrasikan Pintu Meeting...")
+        st.markdown("[Klik di Sini untuk Masuk Ruang Rapat]")
 
-# RUANG 4: SASTRA & HIBURAN
-elif ruang == "4. Sastra & Hiburan (Ruang Budaya)":
-    st.header("🎭 Ruang Sastra & Budaya")
-    st.write("Sistem Sedekah Digital: Baca Bab 1-3 Gratis.")
-    with st.expander("📚 Cerpen: Kebangkitan Nalar"):
-        st.write("Bab 1: Cahaya dari Timur...")
-        st.button("Buka Bab Selanjutnya (Saweria)")
+# --- RUANG 4: RUANG SASTRA & BUDAYA ---
+elif ruang == "🎭 Ruang Sastra & Budaya":
+    st.header("🎭 Sastra & Hiburan (Ruang Budaya)")
+    st.write("Menghaluskan budi pekerti melalui karya anak bangsa.")
+    
+    with st.container():
+        st.subheader("Koleksi Pilihan")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.write("**📖 Cerpen & Puisi**")
+            st.caption("Baca Bab 1-3 Gratis")
+            st.button("Buka Lanjutannya (Sedekah Digital/Saweria)")
+        with c2:
+            st.write("**🎨 Komik Anak Bangsa**")
+            st.caption("Sistem Bagi Hasil 70/30")
 
-# RUANG 5: ALAT BEDAH
-elif ruang == "5. Alat Bedah & Kalkulator":
+# --- RUANG 5: ALAT BEDAH ---
+elif ruang == "🧮 Ruang Alat Bedah & Kalkulator":
     st.header("🧮 Alat Bedah & Kalkulator Utility")
-    opsi_tool = st.selectbox("Pilih Alat:", ["Cek Plagiasi", "Kalkulator Zakat/Waris", "Analisa Narasi"])
-    if opsi_tool == "Kalkulator Zakat/Waris":
-        st.number_input("Masukkan Nominal Harta:", step=100000)
-        st.button("Hitung Hak Waris")
+    tool = st.selectbox("Pilih Alat Bantu:", ["Kalkulator Zakat & Waris", "Cek Plagiasi (Gratis 1x/hari)", "Analisa Narasi (Reading Ease)"])
+    
+    if tool == "Kalkulator Zakat & Waris":
+        st.number_input("Masukkan Nominal Harta:", step=1000)
+        st.button("Hitung Distribusi")
 
-# --- 6. FOOTER & FILOSOFI ---
+# ==========================================
+# 5. PENUTUP & FILOSOFI (FOOTER)
+# ==========================================
 st.markdown("---")
-st.caption("Mas Hilmi sebagai Khalifah | Logic World: Guru, Kantor, dan Pasar.")
+st.markdown(
+    """
+    <div style='text-align: center;'>
+        <p><i>"Apa yang dulu dihancurkan oleh musuh karena rasa takut, hari ini Mas bangun kembali karena rasa cinta pada ilmu."</i></p>
+        <small><b>LOGIC WORLD</b> - Khalifah: Hilmi Mulazaman (Prasanti Adikala)</small>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
